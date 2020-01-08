@@ -1,0 +1,63 @@
+@font-face {
+  font-family: "Anton";
+  src: url("Anton.ttf");
+}
+
+.btn-submit {
+	background-color:#44c767;
+	border-radius:8px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:16px 64px;
+	text-decoration:none;
+}
+.btn-submit:hover {
+	background-color:#5cbf2a;
+}
+.btn-submit:active {
+	position:relative;
+	top:1px;
+}
+
+
+#error {
+  display: none;
+  text-align: center;
+}
+
+#header {
+  align-items: center;
+  display: flex;
+}
+
+#loading {
+  display: none;
+  text-align: center;
+}
+
+#logo {
+  float: left;
+  height: 20vh;
+}
+
+#result {
+  padding-left: 3vw;
+  text-align: center;
+}
+
+#sidebar-menu {
+  border-right: 1px solid black;
+  float: left;
+  height: 100vh;
+  width: 30vw;
+}
+
+#title {
+  color: #173F6D;
+  font-family: "Anton";
+  font-size: 6vh;
+}

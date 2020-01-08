@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+
+<body>
+  <nav id="sidebar-menu">
+    <header id="header">
+      <img src="{{ url_for('static', filename='img/logo.png') }}" id="logo">
+      <p id="title">Whack-a-Mole</p>
+    </header>
+    <hr>
+    <nav id="sidebar-form">
+      <form enctype="multipart/form-data" name="settings">
+        <label for="lesion">Lesion image</label>
+        <input type="file" name="lesion" id="lesion" required>
+        <br>
+        <br>
+        <label for="mask">Mask image (optional)</label>
+        <input type="file" name="mask" id="mask">
+
+        <p><b>Algorithm type</b> </p>
+        <input type="radio" name="algorithm" value="PP" id="pp" checked>
+        <label for="pp">Just preprocessing</label>
+        <br>
+        <input type="radio" name="algorithm" value="COCOAW" id="cc">
+        <label for="cc">COCOAW</label>
+        <br>
+        <input type="radio" name="algorithm" value="IDC" id="mm">
+        <label for="mm">IDC</label>
+        <br>
+        <input type="radio" name="algorithm" value="MN" id="nn">
+        <label for="nn">MoleNet</label>
+        <br>
+        <br>
+        <input type="submit" value="Go!" class="btn-submit">
+      </form>
+    </nav>
+  </nav>
+  <div id="result">
+  </div>
+  <div id="loading">
+    <h2 style="color: red;">Loading, please wait...</h2>
+    <img src="{{ url_for('static', filename='img/intervallo.gif') }}">
+  </div>
+  <div id="error">
+    <h2 style="color:red;">An error occurred</h2>
+    <img src="{{ url_for('static', filename='img/jj.gif') }}">
+  </div>
+  <script src="{{ url_for('static', filename='js/form.js') }}"></script>
+</body>

@@ -1,0 +1,23 @@
+<img src="{{ url_for('static', filename='img/result/') }}{{ image_filename }}">
+<table style="border:0px; padding-top:2vh; width:66vw;">
+  <tr style="text-align:center;">
+    <td>
+      Elapsed time: {{ processing_time }}s
+    </td>
+    {% if jaccard >= 0 %}
+    <td>
+      Jaccard index: {{ jaccard }}
+    </td>
+    {% endif %}
+    {% if prediction %}
+    <td>
+      <p style="color:blue;"><b>Prediction</b></p>
+    </td>
+    {% endif %}
+    {% if masked %}
+    <td>
+      <p style="color:red;"><b>Mask</b></p>
+    </td>
+    {% endif %}
+  </tr>
+</table>
