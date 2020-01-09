@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<head>
+
+</head>
+
+<body>
+  <h1 onclick="playVid()" id="title">Wh-a-M was developed by:</h1>
+  <p>Vincenzo Claudio Pierro</p>
+  <p>Giovanni Scafuri</p>
+  <p>Sergio Siniscalchi</p>
+
+  <video controls autoplay id="myVideo">
+    <source src="{{ url_for('static', filename='img/ee.mp4') }}" type="video/mp4">
+  </video>
+
+  <p>Made with ♥ in University of Salerno</p>
+
+  <script>
+    var vid = document.getElementById("myVideo");
+    function playVid() {
+      vid.play();
+    }
+  </script>
+</body>
+
+</html>

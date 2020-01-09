@@ -22,6 +22,11 @@ def add_header(r):
     return r
 
 
+@app.route('/ee', methods=['GET'])
+def ee():
+    return render_template("ee.html")
+
+
 @app.route('/', methods=['GET'])
 def home_page():
     return render_template("index.html")
@@ -63,7 +68,6 @@ def process():
     start = time.time()
     processed_lesion = preprocessing(lesion)
     predicted_mask = algorithm(processed_lesion)
-    cv.imwrite("tmp.png", predicted_mask)
     end = time.time()
 
     if mask is not None:
