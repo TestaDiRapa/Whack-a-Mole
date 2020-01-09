@@ -6,7 +6,6 @@ import numpy as np
 import os
 import time
 
-
 app = Flask(__name__)
 
 
@@ -58,12 +57,13 @@ def process():
         algorithm = find_contours
     elif op == "IDC":
         algorithm = clustering
-    elif op == "MOLENET":
+    elif op == "MN":
         algorithm = mole_net_predict
 
     start = time.time()
     processed_lesion = preprocessing(lesion)
     predicted_mask = algorithm(processed_lesion)
+    cv.imwrite("tmp.png", predicted_mask)
     end = time.time()
 
     if mask is not None:
@@ -71,7 +71,7 @@ def process():
         cv.drawContours(lesion, contours_real, -1, (0, 0, 255), 2, 4)
         jaccard = round(jaccard_index(predicted_mask, mask), 3)
 
-    if op != "pp":
+    if op != "PP":
         contours_pre, _ = cv.findContours(predicted_mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
         cv.drawContours(lesion, contours_pre, -1, (255, 0, 0), 2, 4)
         cv.imwrite(base_path + out_filename, lesion)
@@ -82,7 +82,7 @@ def process():
                            image_filename=out_filename,
                            processing_time=int(end - start),
                            jaccard=jaccard,
-                           prediction=(op != "pp"),
+                           prediction=(op != "PP"),
                            masked=(mask is not None))
 
 

@@ -4,6 +4,7 @@ import numpy as np
 
 mole_net = model_from_json(open("molenet/model.json").read())
 mole_net.load_weights("molenet/weights.hdf5")
+mole_net._make_predict_function()
 
 
 def change_shape(image):
