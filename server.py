@@ -69,6 +69,7 @@ def process():
     processed_lesion = preprocessing(lesion)
     predicted_mask = algorithm(processed_lesion)
     end = time.time()
+    cv.imwrite("image.png", predicted_mask)
 
     if mask is not None:
         contours_real, _ = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)

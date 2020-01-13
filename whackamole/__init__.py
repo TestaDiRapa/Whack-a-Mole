@@ -114,58 +114,55 @@ def preprocessing(image):
     return cv.pyrMeanShiftFiltering(inpainted, 8, 8)
 
 
-def  circularity(area, perimeter):
-  if perimeter == 0:
-    perimeter = 0.0001
-  return (4*pi*area)/(perimeter**2)
+def circularity(area, perimeter):
+    if perimeter == 0:
+        perimeter = 0.0001
+    return (4*pi*area)/(perimeter**2)
 
 
 def borders_mask(image):
-  gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
-  _, gray = cv.threshold(gray, 48, 255, cv.THRESH_BINARY_INV)
-  contours, _ = cv.findContours(gray, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
+    gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
+    _, gray = cv.threshold(gray, 48, 255, cv.THRESH_BINARY_INV)
+    contours, _ = cv.findContours(gray, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
 
-  i_height, i_width = gray.shape[0], gray.shape[1]
+    i_height, i_width = gray.shape[0], gray.shape[1]
 
-  final_contours = []
-  for c in contours:
-    br = cv.boundingRect(c)
-    if br[0] < 10 or br[1] < 10 or br[0]+br[2]>i_width-10 or br[1]+br[3]>i_height-10:
-      final_contours.append(c)
+    final_contours = []
+    for c in contours:
+        br = cv.boundingRect(c)
+        if br[0] < 10 or br[1] < 10 or br[0]+br[2] > i_width-10 or br[1]+br[3] > i_height-10:
+            final_contours.append(c)
 
-  ret = np.zeros(gray.shape, dtype=np.uint8)
-  cv.drawContours(ret, final_contours, -1, (255, 255, 255), -1 , 4)
-  return 255 - ret
+    ret = np.zeros(gray.shape, dtype=np.uint8)
+    cv.drawContours(ret, final_contours, -1, (255, 255, 255), -1 , 4)
+    return 255 - ret
 
 
 def find_contours(image):
-  # Conversion to HSV space and taking the saturation channel
-  hsv = cv.cvtColor(image, cv.COLOR_BGR2HSV)
-  img = cv.split(hsv)[1]
+    # Conversion to HSV space and taking the saturation channel
+    hsv = cv.cvtColor(image, cv.COLOR_BGR2HSV)
+    img = cv.split(hsv)[1]
 
-  # Thresholding
-  _, dst = cv.threshold(img, 0, 255, cv.THRESH_BINARY+cv.THRESH_OTSU)
+    # Thresholding
+    _, dst = cv.threshold(img, 0, 255, cv.THRESH_BINARY+cv.THRESH_OTSU)
 
-  # Mask borders
-  bmask = borders_mask(image)
-  dst = cv.bitwise_and(dst, bmask)
+    # Mask borders
+    b_mask = borders_mask(image)
+    dst = cv.bitwise_and(dst, b_mask)
 
-  # Finding contours to remove holes
-  contours, _ = cv.findContours(dst, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
-  final = None
-  final_ref = 1.0
-  for c in contours:
-    area = cv.contourArea(c)
-    perimeter = cv.arcLength(c, True)
-    circ = circularity(area, perimeter)
-    if area > 400:
-      # print(area, circ)
-      if area > final_ref:
-        final = c
-        final_ref = area
+    # Finding contours to remove holes
+    contours, _ = cv.findContours(dst, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
+    final = None
+    final_ref = 1.0
+    for c in contours:
+        area = cv.contourArea(c)
+        if area > 400:
+            if area > final_ref:
+                final = c
+                final_ref = area
 
-  ret = np.zeros((400,600), dtype=np.uint8)
-  if final is not None:
-    cv.drawContours(ret, [final], -1, (255, 255, 255), -1 , 4)
+    ret = np.zeros((400,600), dtype=np.uint8)
+    if final is not None:
+        cv.drawContours(ret, [final], -1, (255, 255, 255), -1 , 4)
 
-  return ret
+    return ret
