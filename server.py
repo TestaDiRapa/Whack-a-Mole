@@ -31,6 +31,8 @@ def home_page():
 def process():
 
     base_path = "static/img/result/"
+    if not os.path.exists(base_path):
+        os.mkdir(base_path)
     temps = os.listdir(base_path)
     if len(temps) > 0:
         os.remove(base_path + temps[0])

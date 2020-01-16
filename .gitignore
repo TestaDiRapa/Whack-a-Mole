@@ -1,3 +1,4 @@
 .idea
 molenet/weights.hdf5
 **/__pycache__/**
+static/image/result
