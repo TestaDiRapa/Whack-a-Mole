@@ -22,11 +22,6 @@ def add_header(r):
     return r
 
 
-@app.route('/ee', methods=['GET'])
-def ee():
-    return render_template("ee.html")
-
-
 @app.route('/', methods=['GET'])
 def home_page():
     return render_template("index.html")
