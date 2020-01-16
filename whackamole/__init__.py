@@ -156,7 +156,9 @@ def find_contours(image):
     final_ref = 1.0
     for c in contours:
         area = cv.contourArea(c)
-        if area > 400:
+        perimeter = cv.arcLength(c, True)
+        circ = circularity(area, perimeter)
+        if area > 400 and circ < 0.8:
             if area > final_ref:
                 final = c
                 final_ref = area
