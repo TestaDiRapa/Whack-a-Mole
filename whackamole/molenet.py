@@ -18,6 +18,7 @@ def mole_net_predict(image):
     input_image = change_shape(image)
     p = mole_net.predict(input_image)
     prediction = np.uint8(p[0] * 255)
+    # cv.imwrite("0_prediction.png", prediction)
     _, prediction = cv.threshold(prediction, 128, 255, cv.THRESH_BINARY+cv.THRESH_OTSU)
     return prediction
 
