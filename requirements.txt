@@ -15,7 +15,7 @@ Click==7.0
 colormath==3.0.0
 cycler==0.10.0
 decorator==4.4.0
-Django==2.2.1
+Django==2.2.28
 et-xmlfile==1.0.1
 Flask==1.0.3
 Flask-Cors==3.0.7
